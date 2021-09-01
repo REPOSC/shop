@@ -8,25 +8,25 @@ import cn.alumik.shop.entity.Transaction;
 import cn.alumik.shop.service.RefundRequestService;
 import cn.alumik.shop.service.RefundService;
 import cn.alumik.shop.service.TransactionService;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/transaction")
 public class TransactionController {
     private TransactionService transactionService;
     private RefundRequestService refundRequestService;
+    private RefundService refundService;
 
-    public TransactionController(TransactionService transactionService, RefundRequestService refundRequestService, RefundService refundService) {
+    public TransactionController(TransactionService transactionService, RefundRequestService refundRequestService, RefundService refundService, RefundService refundService1) {
         this.transactionService = transactionService;
         this.refundRequestService = refundRequestService;
+        this.refundService = refundService1;
     }
 
     @GetMapping("/detail")
@@ -49,6 +49,7 @@ public class TransactionController {
 
     @PostMapping("/refund")
     public String actionRefundPoster(@ModelAttribute("refund") RefundRequest refundRequest){
+        refundRequest.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         refundRequestService.save(refundRequest);
         int id = refundRequest.getTransaction().getId();
         return "redirect:/transaction/detail?id=" + id;
@@ -65,12 +66,15 @@ public class TransactionController {
     public String actionDealRefundPoster(@ModelAttribute("refundRequest")RefundRequest refundRequest,
                                          @RequestParam("agree") String agree,
                                          @RequestParam("agreeMoney") BigDecimal agreeMoney){
+        refundRequest = refundRequestService.getById(refundRequest.getId());
         refundRequest.setDealt(true);
         if (agree.equals("agree")){
             Refund refund = new Refund();
             refundRequest.setRefund(refund);
             refund.setPrice(agreeMoney);
             refund.setRefundRequest(refundRequest);
+            refund.setRefundedAt(new Timestamp(System.currentTimeMillis()));
+            refundService.save(refund);
         }
         refundRequestService.save(refundRequest);
 

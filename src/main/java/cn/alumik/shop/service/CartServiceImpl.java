@@ -7,6 +7,7 @@ import cn.alumik.shop.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
@@ -43,6 +44,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void save(Cart cart) {
+        cart.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         cartRepository.save(cart);
     }
 

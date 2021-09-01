@@ -106,6 +106,7 @@ public class ItemServiceImpl implements ItemService{
         String username = securityService.findLoggedInUsername();
         User user = userRepository.findByUsername(username);
         item.setSeller(user);
+        item.setCreatedAt(itemRepository.findById(item.getId()).get().getCreatedAt());
         item.setModifiedAt(new Timestamp(System.currentTimeMillis()));
         itemRepository.save(item);
     }

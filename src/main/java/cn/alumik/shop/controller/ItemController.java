@@ -54,10 +54,7 @@ public class ItemController {
         return "item/add";
     }
 
-    private static final String IP_ADDR = "111.230.242.203";//服务器地址
-    //private static final String IP_ADDR = "localhost";//服务器地址
-    private static final int uploadPort = 12345;//服务器端口号
-    private static final int downloadPort = 10010;
+    private static final String localImageStorage = "./img-store/";
 
     @PostMapping("/add")
     public String actionAddPoster(@Valid @ModelAttribute("item") Item item, BindingResult bindingResult,
@@ -95,18 +92,12 @@ public class ItemController {
     }
 
     private void getImageFromServer(@ModelAttribute("item") @Valid Item item, @RequestParam(defaultValue = "") MultipartFile image) throws IOException {
-        String fileOriginalName = image.getOriginalFilename();
-        String newFileName = UUID.randomUUID() + fileOriginalName.substring(fileOriginalName.lastIndexOf("."));
-        Socket socket = new Socket(IP_ADDR, uploadPort);
-        DataOutputStream filenameos = new DataOutputStream(socket.getOutputStream());
-        filenameos.writeUTF(newFileName);
-        filenameos.writeLong(image.getSize());
-        OutputStream filecontentos = socket.getOutputStream();
+        String newFileName = localImageStorage + UUID.randomUUID();
         InputStream filecontentis = image.getInputStream();
         byte[] results = filecontentis.readAllBytes();
-        filecontentos.write(results);
+        OutputStream newFileStream = new FileOutputStream(newFileName);
+        newFileStream.write(results);
         itemService.save(item, newFileName);
-        socket.shutdownOutput();
     }
 
     @GetMapping("/buy")
@@ -135,10 +126,7 @@ public class ItemController {
     @GetMapping("/getpic")
     public ResponseEntity<Resource> serveFile(Model model, int id) throws IOException {
         Item item = itemService.getById(id);
-        Socket socket = new Socket(IP_ADDR, downloadPort);
-        DataOutputStream os = new DataOutputStream(socket.getOutputStream());
-        os.writeUTF(item.getPic());
-        InputStream is = socket.getInputStream();
+        InputStream is = new FileInputStream(item.getPic());
         Resource file = new InputStreamResource(is);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);

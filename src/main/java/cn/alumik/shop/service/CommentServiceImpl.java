@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 
 @Service
@@ -27,6 +28,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void save(Comment comment) {
+        comment.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         commentRepository.save(comment);
     }
 
