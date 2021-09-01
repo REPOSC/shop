@@ -2,6 +2,7 @@ package cn.alumik.shop.controller;
 
 import cn.alumik.shop.entity.*;
 import cn.alumik.shop.service.*;
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
@@ -44,6 +45,11 @@ public class ItemController {
         this.cartService = cartService;
     }
 
+    //linux和windows下通用
+    private String getJarFilePath() {
+        return System.getProperty("user.dir");
+    }
+
     @GetMapping("/add")
     public String actionAddGetter(Model model) {
         Item item = new Item();
@@ -54,7 +60,7 @@ public class ItemController {
         return "item/add";
     }
 
-    private static final String localImageStorage = "./img-store/";
+    private static final String localImageStorage = "img-store";
 
     @PostMapping("/add")
     public String actionAddPoster(@Valid @ModelAttribute("item") Item item, BindingResult bindingResult,
@@ -92,7 +98,7 @@ public class ItemController {
     }
 
     private void getImageFromServer(@ModelAttribute("item") @Valid Item item, @RequestParam(defaultValue = "") MultipartFile image) throws IOException {
-        String newFileName = localImageStorage + UUID.randomUUID();
+        String newFileName = getJarFilePath() + File.separatorChar + localImageStorage + File.separatorChar + UUID.randomUUID();
         InputStream filecontentis = image.getInputStream();
         byte[] results = filecontentis.readAllBytes();
         OutputStream newFileStream = new FileOutputStream(newFileName);
