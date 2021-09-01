@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -30,7 +30,7 @@ CREATE TABLE `address` (
   UNIQUE KEY `address_id_uindex` (`id`),
   KEY `address_user_id_fk` (`id_user`),
   CONSTRAINT `address_user_id_fk` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +61,7 @@ CREATE TABLE `cart` (
   KEY `cart_user_id_fk` (`id_user`),
   CONSTRAINT `cart_item_id_fk` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`),
   CONSTRAINT `cart_user_id_fk` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,7 +85,7 @@ CREATE TABLE `category` (
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `category_id_uindex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,7 +115,7 @@ CREATE TABLE `comment` (
   UNIQUE KEY `comment_id_uindex` (`id`),
   KEY `comment_transaction_id_fk` (`id_transaction`),
   CONSTRAINT `comment_transaction_id_fk` FOREIGN KEY (`id_transaction`) REFERENCES `transaction` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +141,7 @@ CREATE TABLE `favorite_item` (
   KEY `favorite_item_item_id_fk` (`id_item`),
   CONSTRAINT `favorite_item_item_id_fk` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`),
   CONSTRAINT `favorite_item_user_id_fk` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,7 +167,7 @@ CREATE TABLE `favorite_user` (
   KEY `favorite_user_user_id_fk` (`by_user`),
   CONSTRAINT `favorite_user_user_id_fk` FOREIGN KEY (`by_user`) REFERENCES `user` (`id`),
   CONSTRAINT `favorite_user_user_id_fk_2` FOREIGN KEY (`favorite_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +191,7 @@ CREATE TABLE `gender` (
   `name` varchar(50) NOT NULL,
   UNIQUE KEY `gender_name_uindex` (`name`),
   UNIQUE KEY `gender_id_uindex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +222,7 @@ CREATE TABLE `history` (
   KEY `history_user_id_fk` (`id_user`),
   CONSTRAINT `history_item_id_fk` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`),
   CONSTRAINT `history_user_id_fk` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,7 +259,7 @@ CREATE TABLE `item` (
   KEY `item_user_id_fk` (`seller`),
   CONSTRAINT `item_category_id_fk` FOREIGN KEY (`id_category`) REFERENCES `category` (`id`),
   CONSTRAINT `item_user_id_fk` FOREIGN KEY (`seller`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -286,7 +286,7 @@ CREATE TABLE `persistent_logins` (
   PRIMARY KEY (`series`),
   KEY `persistent_logins_user_username_fk` (`username`),
   CONSTRAINT `persistent_logins_user_username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,7 +314,7 @@ CREATE TABLE `refund` (
   UNIQUE KEY `refund_id_uindex` (`id`),
   KEY `refund_refund_request_id_fk` (`id_refund_request`),
   CONSTRAINT `refund_refund_request_id_fk` FOREIGN KEY (`id_refund_request`) REFERENCES `refund_request` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -343,7 +343,7 @@ CREATE TABLE `refund_request` (
   UNIQUE KEY `refund_request_id_uindex` (`id`),
   KEY `refund_request_transaction_id_fk` (`id_transaction`),
   CONSTRAINT `refund_request_transaction_id_fk` FOREIGN KEY (`id_transaction`) REFERENCES `transaction` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -368,7 +368,7 @@ CREATE TABLE `role` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_name_uindex` (`name`),
   UNIQUE KEY `role_id_uindex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -402,7 +402,7 @@ CREATE TABLE `transaction` (
   KEY `transaction_user_id_fk` (`id_user`),
   CONSTRAINT `transaction_item_id_fk` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`),
   CONSTRAINT `transaction_user_id_fk` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -429,7 +429,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_username_uindex` (`username`),
   UNIQUE KEY `user_id_uindex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,6 +438,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (7,'administrator','$2a$10$UTsZI0VYtk4KCc10KD.4IeYJanwGsVLVFcJKEjO9AaAw6F4qYIu9K',1),(8,'superadministrator','$2a$10$WD/AmlReZvvW0FFadydgn.oPUITBI2rXogGHO2TSLUOWW9s85NUf6',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -462,7 +463,7 @@ CREATE TABLE `user_profile` (
   KEY `user_profile_user_id_fk` (`id_user`),
   CONSTRAINT `user_profile_gender_id_fk` FOREIGN KEY (`id_gender`) REFERENCES `gender` (`id`),
   CONSTRAINT `user_profile_user_id_fk` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -471,6 +472,7 @@ CREATE TABLE `user_profile` (
 
 LOCK TABLES `user_profile` WRITE;
 /*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
+INSERT INTO `user_profile` VALUES (6,NULL,NULL,NULL,'2021-09-01 00:00:00',7,3),(7,NULL,NULL,NULL,'2021-09-01 00:00:00',8,3);
 /*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -482,13 +484,16 @@ DROP TABLE IF EXISTS `user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_role` (
-  `id_role` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) NOT NULL,
-  PRIMARY KEY (`id_user`),
+  `id_role` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_role_id_uindex` (`id`),
   KEY `user_role_role_id_fk` (`id_role`),
+  KEY `user_role_user_id_fk` (`id_user`),
   CONSTRAINT `user_role_role_id_fk` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`),
   CONSTRAINT `user_role_user_id_fk` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -497,6 +502,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+INSERT INTO `user_role` VALUES (1,7,3),(2,7,2),(3,8,3),(4,8,2),(5,8,1);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -509,4 +515,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-01 10:09:51
+-- Dump completed on 2021-09-01 11:20:45
